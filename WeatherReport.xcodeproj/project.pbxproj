@@ -17,8 +17,10 @@
 		C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA702095F40D00841B7F /* ConfigurationManager.swift */; };
 		C91BDA782095F40D00841B7F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA722095F40D00841B7F /* APIManager.swift */; };
 		C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA742095F40D00841B7F /* UIView+Extension.swift */; };
-		C91BDA7B209612E600841B7F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA7A209612E600841B7F /* MasterViewController.swift */; };
-		C91BDA7D209612ED00841B7F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA7C209612ED00841B7F /* DetailViewController.swift */; };
+		C91BDA802096167300841B7F /* DBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA7F2096167300841B7F /* DBHandler.swift */; };
+		C91BDA8220961CBE00841B7F /* WeatherReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA8120961CBE00841B7F /* WeatherReportModel.swift */; };
+		C91BDA842096261400841B7F /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA832096261400841B7F /* WeatherListViewController.swift */; };
+		C91BDA862096262C00841B7F /* WeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA852096262C00841B7F /* WeatherDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +38,10 @@
 		C91BDA702095F40D00841B7F /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		C91BDA722095F40D00841B7F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		C91BDA742095F40D00841B7F /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		C91BDA7A209612E600841B7F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		C91BDA7C209612ED00841B7F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C91BDA7F2096167300841B7F /* DBHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBHandler.swift; sourceTree = "<group>"; };
+		C91BDA8120961CBE00841B7F /* WeatherReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherReportModel.swift; sourceTree = "<group>"; };
+		C91BDA832096261400841B7F /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
+		C91BDA852096262C00841B7F /* WeatherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +111,8 @@
 		C91BDA692095F2DF00841B7F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				C91BDA7C209612ED00841B7F /* DetailViewController.swift */,
-				C91BDA7A209612E600841B7F /* MasterViewController.swift */,
+				C91BDA832096261400841B7F /* WeatherListViewController.swift */,
+				C91BDA852096262C00841B7F /* WeatherDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -116,6 +120,7 @@
 		C91BDA6A2095F2EF00841B7F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C91BDA8120961CBE00841B7F /* WeatherReportModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 		C91BDA6C2095F40D00841B7F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C91BDA7E2096167300841B7F /* DBHandler */,
 				C91BDA6D2095F40D00841B7F /* Constants.swift */,
 				C91BDA6E2095F40D00841B7F /* Configuration */,
 				C91BDA712095F40D00841B7F /* APIManager */,
@@ -160,6 +166,14 @@
 				C91BDA742095F40D00841B7F /* UIView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C91BDA7E2096167300841B7F /* DBHandler */ = {
+			isa = PBXGroup;
+			children = (
+				C91BDA7F2096167300841B7F /* DBHandler.swift */,
+			);
+			path = DBHandler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,14 +269,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeatherReport/Pods-WeatherReport-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CoreStore/CoreStore.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -300,11 +312,13 @@
 				C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */,
 				C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */,
 				C91BDA2F2095D89300841B7F /* AppDelegate.swift in Sources */,
+				C91BDA842096261400841B7F /* WeatherListViewController.swift in Sources */,
+				C91BDA802096167300841B7F /* DBHandler.swift in Sources */,
+				C91BDA8220961CBE00841B7F /* WeatherReportModel.swift in Sources */,
+				C91BDA862096262C00841B7F /* WeatherDetailsViewController.swift in Sources */,
 				C91BDA752095F40D00841B7F /* Constants.swift in Sources */,
 				C91BDA762095F40D00841B7F /* Environment.swift in Sources */,
-				C91BDA7B209612E600841B7F /* MasterViewController.swift in Sources */,
 				C91BDA782095F40D00841B7F /* APIManager.swift in Sources */,
-				C91BDA7D209612ED00841B7F /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,31 +1,18 @@
 PODS:
-  - CoreStore (5.1.0)
   - Kingfisher (4.6.3)
   - MBProgressHUD (1.1.0)
   - ObjectMapper (3.1.0)
 
 DEPENDENCIES:
-  - CoreStore (from `https://github.com/JohnEstropia/CoreStore.git`, branch `master`)
   - Kingfisher
   - MBProgressHUD
   - ObjectMapper
 
-EXTERNAL SOURCES:
-  CoreStore:
-    :branch: master
-    :git: https://github.com/JohnEstropia/CoreStore.git
-
-CHECKOUT OPTIONS:
-  CoreStore:
-    :commit: 3d43314076d56489701a2d2946ac6cef62e41c1a
-    :git: https://github.com/JohnEstropia/CoreStore.git
-
 SPEC CHECKSUMS:
-  CoreStore: e6e6912f182e13bdc0094757ff91805b12d1eb07
   Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
 
-PODFILE CHECKSUM: bc9da342c9a406591dd3a543bfbd579bec72b9fd
+PODFILE CHECKSUM: 2468f0ab6c00ad66dc9e04b905409dd4cba73f6f
 
 COCOAPODS: 1.4.0

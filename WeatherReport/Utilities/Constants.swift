@@ -30,6 +30,6 @@ struct Constants {
     
     /// Segue identifiers
     static let SHOW_REPO_LIST_VC_SEGUE = "showGitHubRepoListSegue"
-    static let SHOW_REPO_DETAILS_VC_SEGUE = "showRepoDetailsSegue"
+    static let SHOW_WEATHER_DETAILS_VC_SEGUE = "showWeatherDetailsVCSegue"
     
 }

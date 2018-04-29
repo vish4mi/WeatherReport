@@ -9,5 +9,4 @@ use_frameworks!
 pod 'Kingfisher'
 pod 'ObjectMapper'
 pod 'MBProgressHUD'
-pod 'CoreStore', :git => 'https://github.com/JohnEstropia/CoreStore.git', :branch => 'master'
 end
