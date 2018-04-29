@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		BAE2A52FC5AD7DC8A6C787C5 /* Pods_WeatherReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251D8D882326B4F0BB222AA5 /* Pods_WeatherReport.framework */; };
 		C91BDA2F2095D89300841B7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA2E2095D89300841B7F /* AppDelegate.swift */; };
-		C91BDA312095D89300841B7F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA302095D89300841B7F /* MasterViewController.swift */; };
-		C91BDA332095D89300841B7F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA322095D89300841B7F /* DetailViewController.swift */; };
 		C91BDA362095D89300841B7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA342095D89300841B7F /* Main.storyboard */; };
 		C91BDA382095D89300841B7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA372095D89300841B7F /* Assets.xcassets */; };
 		C91BDA3B2095D89300841B7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA392095D89300841B7F /* LaunchScreen.storyboard */; };
@@ -19,6 +17,8 @@
 		C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA702095F40D00841B7F /* ConfigurationManager.swift */; };
 		C91BDA782095F40D00841B7F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA722095F40D00841B7F /* APIManager.swift */; };
 		C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA742095F40D00841B7F /* UIView+Extension.swift */; };
+		C91BDA7B209612E600841B7F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA7A209612E600841B7F /* MasterViewController.swift */; };
+		C91BDA7D209612ED00841B7F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA7C209612ED00841B7F /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +27,6 @@
 		BC1ECD3E5B70493C8080248F /* Pods-WeatherReport.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherReport.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherReport/Pods-WeatherReport.release.xcconfig"; sourceTree = "<group>"; };
 		C91BDA2B2095D89300841B7F /* WeatherReport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherReport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91BDA2E2095D89300841B7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C91BDA302095D89300841B7F /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		C91BDA322095D89300841B7F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C91BDA352095D89300841B7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C91BDA372095D89300841B7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C91BDA3A2095D89300841B7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +36,8 @@
 		C91BDA702095F40D00841B7F /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		C91BDA722095F40D00841B7F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		C91BDA742095F40D00841B7F /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		C91BDA7A209612E600841B7F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		C91BDA7C209612ED00841B7F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +96,6 @@
 				C91BDA6A2095F2EF00841B7F /* Models */,
 				C91BDA692095F2DF00841B7F /* ViewControllers */,
 				C91BDA2E2095D89300841B7F /* AppDelegate.swift */,
-				C91BDA302095D89300841B7F /* MasterViewController.swift */,
-				C91BDA322095D89300841B7F /* DetailViewController.swift */,
 				C91BDA342095D89300841B7F /* Main.storyboard */,
 				C91BDA372095D89300841B7F /* Assets.xcassets */,
 				C91BDA392095D89300841B7F /* LaunchScreen.storyboard */,
@@ -109,6 +107,8 @@
 		C91BDA692095F2DF00841B7F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C91BDA7C209612ED00841B7F /* DetailViewController.swift */,
+				C91BDA7A209612E600841B7F /* MasterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -297,14 +297,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C91BDA332095D89300841B7F /* DetailViewController.swift in Sources */,
-				C91BDA312095D89300841B7F /* MasterViewController.swift in Sources */,
 				C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */,
 				C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */,
 				C91BDA2F2095D89300841B7F /* AppDelegate.swift in Sources */,
 				C91BDA752095F40D00841B7F /* Constants.swift in Sources */,
 				C91BDA762095F40D00841B7F /* Environment.swift in Sources */,
+				C91BDA7B209612E600841B7F /* MasterViewController.swift in Sources */,
 				C91BDA782095F40D00841B7F /* APIManager.swift in Sources */,
+				C91BDA7D209612ED00841B7F /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

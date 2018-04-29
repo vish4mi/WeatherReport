@@ -14,4 +14,4 @@ struct Environment {
 
 //Production server configuration
 let prodEnvironment = Environment(name: "production",
-                                  apiEndPoint: "https://api.github.com")
+                                  apiEndPoint: "http://api.openweathermap.org")
