@@ -14,6 +14,11 @@
 		C91BDA362095D89300841B7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA342095D89300841B7F /* Main.storyboard */; };
 		C91BDA382095D89300841B7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA372095D89300841B7F /* Assets.xcassets */; };
 		C91BDA3B2095D89300841B7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91BDA392095D89300841B7F /* LaunchScreen.storyboard */; };
+		C91BDA752095F40D00841B7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA6D2095F40D00841B7F /* Constants.swift */; };
+		C91BDA762095F40D00841B7F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA6F2095F40D00841B7F /* Environment.swift */; };
+		C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA702095F40D00841B7F /* ConfigurationManager.swift */; };
+		C91BDA782095F40D00841B7F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA722095F40D00841B7F /* APIManager.swift */; };
+		C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91BDA742095F40D00841B7F /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		C91BDA372095D89300841B7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C91BDA3A2095D89300841B7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C91BDA3C2095D89300841B7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C91BDA6D2095F40D00841B7F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C91BDA6F2095F40D00841B7F /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		C91BDA702095F40D00841B7F /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		C91BDA722095F40D00841B7F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		C91BDA742095F40D00841B7F /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +90,11 @@
 		C91BDA2D2095D89300841B7F /* WeatherReport */ = {
 			isa = PBXGroup;
 			children = (
+				C91BDA732095F40D00841B7F /* Extensions */,
+				C91BDA6C2095F40D00841B7F /* Utilities */,
+				C91BDA6B2095F2FD00841B7F /* ViewModels */,
+				C91BDA6A2095F2EF00841B7F /* Models */,
+				C91BDA692095F2DF00841B7F /* ViewControllers */,
 				C91BDA2E2095D89300841B7F /* AppDelegate.swift */,
 				C91BDA302095D89300841B7F /* MasterViewController.swift */,
 				C91BDA322095D89300841B7F /* DetailViewController.swift */,
@@ -89,6 +104,62 @@
 				C91BDA3C2095D89300841B7F /* Info.plist */,
 			);
 			path = WeatherReport;
+			sourceTree = "<group>";
+		};
+		C91BDA692095F2DF00841B7F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C91BDA6A2095F2EF00841B7F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C91BDA6B2095F2FD00841B7F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C91BDA6C2095F40D00841B7F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C91BDA6D2095F40D00841B7F /* Constants.swift */,
+				C91BDA6E2095F40D00841B7F /* Configuration */,
+				C91BDA712095F40D00841B7F /* APIManager */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C91BDA6E2095F40D00841B7F /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				C91BDA6F2095F40D00841B7F /* Environment.swift */,
+				C91BDA702095F40D00841B7F /* ConfigurationManager.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		C91BDA712095F40D00841B7F /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				C91BDA722095F40D00841B7F /* APIManager.swift */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
+		C91BDA732095F40D00841B7F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C91BDA742095F40D00841B7F /* UIView+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,7 +299,12 @@
 			files = (
 				C91BDA332095D89300841B7F /* DetailViewController.swift in Sources */,
 				C91BDA312095D89300841B7F /* MasterViewController.swift in Sources */,
+				C91BDA792095F40D00841B7F /* UIView+Extension.swift in Sources */,
+				C91BDA772095F40D00841B7F /* ConfigurationManager.swift in Sources */,
 				C91BDA2F2095D89300841B7F /* AppDelegate.swift in Sources */,
+				C91BDA752095F40D00841B7F /* Constants.swift in Sources */,
+				C91BDA762095F40D00841B7F /* Environment.swift in Sources */,
+				C91BDA782095F40D00841B7F /* APIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
