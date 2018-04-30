@@ -9,7 +9,10 @@
 import Foundation
 import ObjectMapper
 
-class WeatherReportModel {
+class WeatherReportModel: Mappable {
+    required init?(map: Map) {
+    }
+    
     var coordinates: Coord?
     var weather: [Weather]?
     var base: String?
@@ -41,18 +44,24 @@ class WeatherReportModel {
     }
 }
 
-class Clouds {
-    var all: Int?
+class Clouds: Mappable {
+    var cloudCoverArea: Int?
+    
+    required init?(map: Map) {
+    }
     
     // Mappable
     func mapping(map: Map) {
-        all    <- map["all"]
+        cloudCoverArea <- map["all"]
     }
 }
 
-class Coord {
+class Coord: Mappable {
     var longitude: Double?
     var latitude: Double?
+    
+    required init?(map: Map) {
+    }
     
     // Mappable
     func mapping(map: Map) {
@@ -61,30 +70,36 @@ class Coord {
     }
 }
 
-class Main {
+class Main: Mappable {
     var temp: Double?
     var pressure: Int?
     var humidity: Int?
     var tempMin: Double?
     var tempMax: Double?
     
+    required init?(map: Map) {
+    }
+    
     // Mappable
     func mapping(map: Map) {
         temp     <- map["temp"]
         pressure <- map["pressure"]
         humidity <- map["humidity"]
-        tempMin  <- map["tempMin"]
-        tempMax  <- map["tempMax"]
+        tempMin  <- map["temp_min"]
+        tempMax  <- map["temp_max"]
     }
 }
 
-class Sys {
+class Sys: Mappable {
     var type: Int?
     var id: Int?
     var message: Double?
     var country: String?
     var sunrise: Int?
     var sunset: Int?
+    
+    required init?(map: Map) {
+    }
     
     // Mappable
     func mapping(map: Map) {
@@ -97,24 +112,30 @@ class Sys {
     }
 }
 
-class Weather {
-    var id: Int?
+class Weather: Mappable {
+    var weatherConditionCode: Int?
     var main: String?
     var description: String?
     var icon: String?
     
+    required init?(map: Map) {
+    }
+    
     // Mappable
     func mapping(map: Map) {
-        id          <- map["id"]
-        main        <- map["main"]
-        description <- map["description"]
-        icon        <- map["icon"]
+        weatherConditionCode <- map["id"]
+        main                 <- map["main"]
+        description          <- map["description"]
+        icon                 <- map["icon"]
     }
 }
 
-class Wind {
+class Wind: Mappable {
     var speed: Double?
     var degree: Int?
+    
+    required init?(map: Map) {
+    }
     
     // Mappable
     func mapping(map: Map) {

@@ -1,8 +1,8 @@
 //
 //  DBHandler.swift
-//  MyMovies
+//  WeatherReport
 //
-//  Created by Vishal on 18/03/18.
+//  Created by Vishal on 29/04/18.
 //  Copyright © 2018 Vishal Bhadade. All rights reserved.
 //
 
@@ -12,14 +12,37 @@ import ObjectMapper
 
 class DBHandler: NSObject {
     
-    //MARK:  Set up Shared Instance
+    let cityList = [Constants.CITY_ID_SYDNEY, Constants.CITY_ID_MELBOURNE, Constants.CITY_ID_BRISBANE]
     
+    //MARK:  Set up Shared Instance
     // Set up Shared Instance
     static let sharedHandler: DBHandler = {
         let instance = DBHandler()
         // setup code
         return instance
     }()
+    
+    func fetchWeatherReport(with completion: @escaping([WeatherReportModel]?, Error?) -> Void) {
+        var weatherReports: [WeatherReportModel] = [WeatherReportModel]()
+        let group = DispatchGroup.init()
+        
+        for city in cityList {
+            group.enter()
+            APIManager.sharedManager.getWeatherData(forCity: city, and: { (cityWeatherData, error) in
+                if let weatherData = cityWeatherData {
+                    weatherReports.append(weatherData)
+                    group.leave()
+                }
+            })
+        }
+        group.notify(queue: DispatchQueue.main) {
+            completion(weatherReports, nil)
+        }
+    }
+    
+    func refreshWeatherReport() {
+        
+    }
     
     // Update Database as per Response received For PageId
     
