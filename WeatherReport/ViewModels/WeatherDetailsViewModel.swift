@@ -44,7 +44,7 @@ class WeatherDetailsViewModel: NSObject {
                 if let weatherCode = weatherInfo[0].weatherConditionCode {
                     weatherConditionCode = weatherCode
                 }
-                if let weatherDesc = weatherInfo[0].description {
+                if let weatherDesc = weatherInfo[0].weatherDesc {
                     weatherConditionDesc = weatherDesc.capitalizingFirstLetter()
                 }
                 if let weatherIcon = weatherInfo[0].icon {
