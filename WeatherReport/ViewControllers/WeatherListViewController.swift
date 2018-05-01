@@ -9,8 +9,7 @@
 import UIKit
 import CoreStore
 
-class WeatherListViewController: UIViewController, ListObserver {
-    typealias ListEntityType = WeatherInfo
+class WeatherListViewController: UIViewController {
 
     fileprivate let weatherCellIdentifier = "WeatherListTableViewCell"
     fileprivate var weatherListViewModels: [WeatherListViewModel]?
@@ -20,19 +19,20 @@ class WeatherListViewController: UIViewController, ListObserver {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Register for DB change monitoring
+        DBHandler.sharedHandler.setListMonitor(with: self)
         
         self.view.showActivityIndicator()
         DBHandler.sharedHandler.fetchWeatherReport { (weatherReports, error) in
-            if let weatherViewModels = weatherReports {
-                self.weatherReportModels = weatherViewModels
-                self.weatherListViewModels = [WeatherListViewModel]()
-                for weatherReportModel in weatherViewModels {
-                    let weatherListViewModel = WeatherListViewModel(with: weatherReportModel)
-                    self.weatherListViewModels?.append(weatherListViewModel)
-                }
-                self.view.hideActivityIndicator()
-                self.weatherListTableView.reloadData()
+            guard let weatherViewModels = weatherReports else { return }
+            self.weatherReportModels = weatherViewModels
+            self.weatherListViewModels = [WeatherListViewModel]()
+            for weatherReportModel in weatherViewModels {
+                let weatherListViewModel = WeatherListViewModel(with: weatherReportModel)
+                self.weatherListViewModels?.append(weatherListViewModel)
             }
+            self.view.hideActivityIndicator()
+            self.weatherListTableView.reloadData()
         }
     }
 
@@ -56,12 +56,6 @@ class WeatherListViewController: UIViewController, ListObserver {
     func configureWeatherListView() {
         weatherListTableView.rowHeight = UITableViewAutomaticDimension
         weatherListTableView.estimatedRowHeight = UITableViewAutomaticDimension
-    }
-
-    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
-    }
-    
-    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
     }
 }
 
@@ -89,5 +83,15 @@ extension WeatherListViewController: UITableViewDelegate {
             selectedIndexPath = indexPath
             self.performSegue(withIdentifier: Constants.SHOW_WEATHER_DETAILS_VC_SEGUE, sender: self)
         }
+    }
+}
+
+extension WeatherListViewController: ListObserver {
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+        print(monitor.objectsInAllSections())
+        
+    }
+    
+    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
     }
 }

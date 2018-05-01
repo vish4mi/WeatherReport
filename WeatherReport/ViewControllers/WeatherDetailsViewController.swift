@@ -9,9 +9,7 @@
 import UIKit
 import CoreStore
 
-class WeatherDetailsViewController: UIViewController, ListObserver {
-    typealias ListEntityType = WeatherInfo
-    
+class WeatherDetailsViewController: UIViewController {
     
     @IBOutlet weak var weatherDetailsCollectionView: UICollectionView!
     var weatherReportModels: [WeatherReportModel]?
@@ -22,8 +20,9 @@ class WeatherDetailsViewController: UIViewController, ListObserver {
     @IBOutlet weak var pageControl: UIPageControl!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        // Register for DB change monitoring
+        DBHandler.sharedHandler.setListMonitor(with: self)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,14 +50,6 @@ class WeatherDetailsViewController: UIViewController, ListObserver {
                 weatherDetailsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             }
         }
-    }
-    
-    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
-        // ...
-    }
-    
-    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
-        // ...
     }
 }
 
@@ -118,5 +109,15 @@ extension WeatherDetailsViewController: UICollectionViewDelegate {
                 navigationItem.title = weatherDetailsViewModel.cityName.value
             }
         }
+    }
+}
+
+extension WeatherDetailsViewController: ListObserver {
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+        print(monitor.objectsInAllSections())
+        
+    }
+    
+    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
     }
 }

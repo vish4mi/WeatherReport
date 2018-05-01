@@ -12,13 +12,13 @@ import ObjectMapper
 import CoreStore
 
 class DBHandler: NSObject {
-    //Page and Widget Table Monitor
+    // Weather data monitor
     var weatherMonitor: ListMonitor<WeatherInfo>?
     
     let cityList = [Constants.CITY_ID_SYDNEY, Constants.CITY_ID_MELBOURNE, Constants.CITY_ID_BRISBANE]
     
-    //MARK:  Set up Shared Instance
-    // Set up Shared Instance
+    // MARK:  Set up shared instance
+    // Set up shared instance
     static let sharedHandler: DBHandler = {
         let instance = DBHandler()
         // setup code
@@ -26,43 +26,32 @@ class DBHandler: NSObject {
     }()
     
     // Set up List Monitor For Widget Entry
-    func setListMonitor(with controller: WeatherListViewController) {
+    func setListMonitor(with controller: AnyObject) {
         
-        /// Set up WidgetEntry Entity Monitor
+        // Set up WidgetEntry Entity Monitor
         if weatherMonitor == nil {
-
-            self.weatherMonitor = CoreStore.monitorSectionedList(
+            self.weatherMonitor = CoreStore.monitorList(
                 From<WeatherInfo>()
-                    .sectionBy(\.id)
-                    .orderBy(.ascending(\.id))
-                    .tweak { $0.includesPendingChanges = false }
+                .orderBy(.ascending(\.id))
+                    .tweak({ $0.includesPendingChanges = false }
+                )
             )
-            
         }
         //Add Observers
-        self.weatherMonitor?.addObserver(controller)
+        switch controller {
+        case is WeatherListViewController:
+            let aVC: WeatherListViewController = (controller as? WeatherListViewController)!
+            self.weatherMonitor?.addObserver(aVC)
+
+        case is WeatherDetailsViewController:
+            let aVC: WeatherDetailsViewController = (controller as? WeatherDetailsViewController)!
+            self.weatherMonitor?.addObserver(aVC)
+        default: break
+        }
         
         
     }
-    
-//    func getPageMonitor() -> ( ListMonitor<NSManagedObject>?) {
-//        //return self.pageMonitor?.downcast()
-//    }
-    
-//    func getWidgetMonitor() -> (ListMonitor<NSManagedObject>?) {
-//        //return self.widgetMonitor?.downcast()
-//    }
-    
-    //MARK: DeRegister Monitors
-//    func deregisterMonitor(widgetsController:WidgetsContainerViewController) {
-//
-//        //Remove Observers
-//        self.widgetMonitor?.downcast().removeObserver(widgetsController)
-//        self.pageMonitor?.downcast().removeObserver(widgetsController)
-//
-//    }
 
-    
     func fetchWeatherReport(with completion: @escaping([WeatherReportModel]?, Error?) -> Void) {
         var weatherReports: [WeatherReportModel] = [WeatherReportModel]()
         let group = DispatchGroup.init()
