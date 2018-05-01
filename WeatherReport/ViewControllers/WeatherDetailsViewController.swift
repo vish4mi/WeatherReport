@@ -14,7 +14,8 @@ class WeatherDetailsViewController: UIViewController {
     var weatherReportModels: [WeatherReportModel]?
     fileprivate let weatherDetailViewCellIdentifier = "WeatherDetailsViewCell"
     var selectedIndexPath: IndexPath?
-    
+    var initialScrollDone: Bool = false
+
     @IBOutlet weak var pageControl: UIPageControl!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +34,18 @@ class WeatherDetailsViewController: UIViewController {
         if visibleIndexPaths.count > 0 {
             let visibleIndexPath  = visibleIndexPaths[0]
             selectedIndexPath = visibleIndexPath
+            pageControl.currentPage = visibleIndexPath.row
             if let weatherModels = weatherReportModels, visibleIndexPath.row < weatherModels.count {
                 let weatherModel = weatherModels[visibleIndexPath.row]
                 let weatherDetailsViewModel = WeatherDetailsViewModel(with: weatherModel)
                 navigationItem.title = weatherDetailsViewModel.cityName
+            }
+        }
+        
+        if !initialScrollDone {
+            initialScrollDone = true
+            if let indexPath = selectedIndexPath {
+                weatherDetailsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             }
         }
     }
@@ -91,6 +100,7 @@ extension WeatherDetailsViewController: UICollectionViewDelegate {
         if visibleIndexPaths.count > 0 {
             let visibleIndexPath  = visibleIndexPaths[0]
             selectedIndexPath = visibleIndexPath
+            pageControl.currentPage = visibleIndexPath.row
             if let weatherModels = weatherReportModels, visibleIndexPath.row < weatherModels.count {
                 let weatherModel = weatherModels[visibleIndexPath.row]
                 let weatherDetailsViewModel = WeatherDetailsViewModel(with: weatherModel)

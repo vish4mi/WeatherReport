@@ -21,6 +21,8 @@ class WeatherDetailsViewCell: UICollectionViewCell {
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var weatherDescLabel: UILabel!
     @IBOutlet weak var windDescLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var pressureLabel: UILabel!
     
     func configure() {
         self.layer.cornerRadius = 10
@@ -58,6 +60,12 @@ class WeatherDetailsViewCell: UICollectionViewCell {
             }
             if let latitude = weatherDetailsViewModel.latitude {
                 latitudeLabel.text = "\(latitude)"
+            }
+            if let pressureValue = weatherDetailsViewModel.pressure {
+                pressureLabel.text = pressureValue
+            }
+            if let humidityValue = weatherDetailsViewModel.humidity {
+                humidityLabel.text = humidityValue
             }
         }
     }

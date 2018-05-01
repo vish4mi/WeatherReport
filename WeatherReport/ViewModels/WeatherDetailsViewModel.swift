@@ -69,11 +69,13 @@ class WeatherDetailsViewModel: NSObject {
                 if let maxTemp = mainAttributes.tempMax {
                     tempMaximum = "\(maxTemp)" + " " + Constants.DEGREE_CELCIUS
                 }
-                if let pressureValue = mainAttributes.pressure {
-                    pressure = "\(pressureValue)"
+                if let pressureValue = mainAttributes.seaLevelPressure {
+                    pressure = "\(pressureValue)" + " " + "hPa"
+                } else if let pressureValue = mainAttributes.pressure {
+                    pressure = "\(pressureValue)" + " " + "hPa"
                 }
                 if let humidityValue = mainAttributes.humidity {
-                    humidity = "\(humidityValue)"
+                    humidity = "\(humidityValue)" + " " + "%"
                 }
             }
             if let windAttributes = weatherReportModel.wind {
@@ -83,8 +85,8 @@ class WeatherDetailsViewModel: NSObject {
                     windDescription = windDescription! + " " + "at \(speed) m/s"
                 }
                 if let degree = windAttributes.degree {
-                    windDegree = "\(degree)" + Constants.DEGREE
-                    windDescription = windDescription! + " " + "at \(degree)"
+                    windDegree = "\(degree)"
+                    windDescription = windDescription! + " " + "at \(degree)" + Constants.DEGREE
                 }
             }
         }

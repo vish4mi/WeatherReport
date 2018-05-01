@@ -76,7 +76,9 @@ class Main: Mappable {
     var humidity: Int?
     var tempMin: Double?
     var tempMax: Double?
-    
+    var seaLevelPressure: Int?
+    var groundLevelPressure: Int?
+
     required init?(map: Map) {
     }
     
@@ -87,6 +89,8 @@ class Main: Mappable {
         humidity <- map["humidity"]
         tempMin  <- map["temp_min"]
         tempMax  <- map["temp_max"]
+        seaLevelPressure     <- map["sea_level"]
+        groundLevelPressure  <- map["grnd_level"]
     }
 }
 
