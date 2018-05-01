@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreStore
 
-class WeatherDetailsViewController: UIViewController {
+class WeatherDetailsViewController: UIViewController, ListObserver {
+    typealias ListEntityType = WeatherInfo
+    
     
     @IBOutlet weak var weatherDetailsCollectionView: UICollectionView!
     var weatherReportModels: [WeatherReportModel]?
@@ -38,7 +41,7 @@ class WeatherDetailsViewController: UIViewController {
             if let weatherModels = weatherReportModels, visibleIndexPath.row < weatherModels.count {
                 let weatherModel = weatherModels[visibleIndexPath.row]
                 let weatherDetailsViewModel = WeatherDetailsViewModel(with: weatherModel)
-                navigationItem.title = weatherDetailsViewModel.cityName
+                navigationItem.title = weatherDetailsViewModel.cityName.value
             }
         }
         
@@ -48,6 +51,14 @@ class WeatherDetailsViewController: UIViewController {
                 weatherDetailsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             }
         }
+    }
+    
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+        // ...
+    }
+    
+    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
+        // ...
     }
 }
 
@@ -104,7 +115,7 @@ extension WeatherDetailsViewController: UICollectionViewDelegate {
             if let weatherModels = weatherReportModels, visibleIndexPath.row < weatherModels.count {
                 let weatherModel = weatherModels[visibleIndexPath.row]
                 let weatherDetailsViewModel = WeatherDetailsViewModel(with: weatherModel)
-                navigationItem.title = weatherDetailsViewModel.cityName
+                navigationItem.title = weatherDetailsViewModel.cityName.value
             }
         }
     }

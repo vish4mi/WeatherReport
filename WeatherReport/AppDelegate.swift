@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreStore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,10 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupCoreStore() {
-//        do {
-//            try CoreStore.addStorageAndWait()
-//        } catch {
-//        }
+        do {
+            try CoreStore.addStorageAndWait()
+        } catch {
+        }
     }
 
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="WeatherInfo" representedClassName="WeatherInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="base" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clouds" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="cod" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="coordinates" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="dt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mainAttributes" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="system" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="visibility" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="weather" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="wind" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="WeatherInfo" positionX="-63" positionY="-18" width="128" height="225"/>
+    </elements>
+</model>

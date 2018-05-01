@@ -8,18 +8,27 @@
 
 import Foundation
 
-class WeatherListViewModel: NSObject {
-    var cityTemp: Double?
-    var cityName: String?
+class WeatherListViewModel: NSObject, WeatherListViewModelProtocol {
+    
+    var cityTemp: Dynamic<String>
+    var cityName: Dynamic<String>
     
     init(with weatherModel: WeatherReportModel?) {
-        if let weatherReportModel = weatherModel {
-            if let main = weatherReportModel.mainAttributes, let temp = main.temp {
-                cityTemp = temp
-            }
-            if let name = weatherReportModel.name {
-                cityName = name
-            }
+        cityName = Dynamic(WeatherListViewModel.getCityName(forWeatherModel: weatherModel))
+        cityTemp = Dynamic(WeatherListViewModel.getCityTemp(forWeatherModel: weatherModel))
+    }
+    
+    fileprivate static func getCityName(forWeatherModel aViewModel: WeatherReportModel?) -> String {
+        if let weatherReportModel = aViewModel, let name = weatherReportModel.name {
+            return name
         }
+        return ""
+    }
+    
+    fileprivate static func getCityTemp(forWeatherModel aViewModel: WeatherReportModel?) -> String {
+        if let weatherReportModel = aViewModel, let mainAttribs = weatherReportModel.mainAttributes, let temp = mainAttribs.temp {
+            return "\(temp)"
+        }
+        return ""
     }
 }

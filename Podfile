@@ -9,4 +9,5 @@ use_frameworks!
 pod 'Kingfisher'
 pod 'ObjectMapper'
 pod 'MBProgressHUD'
+pod 'CoreStore', '~> 5.0'
 end

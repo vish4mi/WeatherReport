@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreStore
 
-class WeatherListViewController: UIViewController {
+class WeatherListViewController: UIViewController, ListObserver {
+    typealias ListEntityType = WeatherInfo
 
     fileprivate let weatherCellIdentifier = "WeatherListTableViewCell"
     fileprivate var weatherListViewModels: [WeatherListViewModel]?
@@ -56,6 +58,11 @@ class WeatherListViewController: UIViewController {
         weatherListTableView.estimatedRowHeight = UITableViewAutomaticDimension
     }
 
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+    }
+    
+    func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
+    }
 }
 
 extension WeatherListViewController: UITableViewDataSource {

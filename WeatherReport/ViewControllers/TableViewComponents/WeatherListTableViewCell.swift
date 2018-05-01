@@ -20,12 +20,8 @@ class WeatherListTableViewCell: UITableViewCell {
 
     func setupCell(withViewModel weatherListViewModel: WeatherListViewModel?) {
         if let weatherViewModel = weatherListViewModel {
-            if let cityName = weatherViewModel.cityName {
-                cityNameLabel.text = cityName
-            }
-            if let cityTemp = weatherViewModel.cityTemp {
-                cityTempLabel.text = "\(cityTemp)"
-            }
+            cityNameLabel.text = weatherViewModel.cityName.value
+            cityTempLabel.text = weatherViewModel.cityTemp.value
         }
     }
 }

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeatherReport/ViewModels/WeatherDetailsViewModel.swift"
-            timestampString = "546817649.3892061"
+            filePath = "WeatherReport/ViewControllers/CollectionViewComponents/WeatherDetailsViewCell.swift"
+            timestampString = "546894955.220258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "init(with:)"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "setupCell(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
