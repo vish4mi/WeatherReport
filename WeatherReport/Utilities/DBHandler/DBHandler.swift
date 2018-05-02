@@ -14,6 +14,7 @@ import CoreStore
 class DBHandler: NSObject {
     // Weather data monitor
     var weatherMonitor: ListMonitor<WeatherInfo>?
+    var requestTimer: Timer? = nil
     
     let cityList = [Constants.CITY_ID_SYDNEY, Constants.CITY_ID_MELBOURNE, Constants.CITY_ID_BRISBANE]
     
@@ -52,37 +53,56 @@ class DBHandler: NSObject {
         
     }
 
-    func fetchWeatherReport(with completion: @escaping([WeatherReportModel]?, Error?) -> Void) {
-        var weatherReports: [WeatherReportModel] = [WeatherReportModel]()
-        let group = DispatchGroup.init()
+    func requestWeatherReport() {
+        let dispatchGroup = DispatchGroup()
         
         for city in cityList {
-            group.enter()
+            dispatchGroup.enter()
             APIManager.sharedManager.getWeatherData(forCity: city, and: { (cityWeatherData, error) in
                 if let weatherData = cityWeatherData {
-                    weatherReports.append(weatherData)
-                    group.leave()
+                    self.updateDB(with: weatherData)
                 }
+                dispatchGroup.leave()
             })
         }
-        group.notify(queue: DispatchQueue.main) {
-            self.updateDB(with: weatherReports)
-            completion(weatherReports, nil)
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.refreshWeatherReport()
         }
     }
     
     func refreshWeatherReport() {
-        
+        if let requestTimer = self.requestTimer {
+            requestTimer.invalidate()
+        }
+        self.requestTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (aTimer) in
+            self.requestWeatherReport()
+        }
     }
     
     // Update Database as per Response received For PageId
     
-    func updateDB(with weatherData: [WeatherReportModel]?) -> Void {
+    func updateDB(with weatherData: WeatherReportModel?) -> Void {
 
         //Update Or Insert New Widgets
-        if let weatherModels = weatherData {
-            for weatherModel in weatherModels {
-                CoreStore.perform(asynchronous: { (transaction) -> Void in
+        if let weatherModel = weatherData, let cityId = weatherModel.id {
+            let predicate = NSPredicate(format: "id == %d", cityId)
+            
+            CoreStore.perform(asynchronous: { (transaction) -> Void in
+                if let weatherTuple = transaction.fetchOne(From<WeatherInfo>(), Where<WeatherInfo>(predicate)) {
+                    weatherTuple.coordinates = NSKeyedArchiver.archivedData(withRootObject: weatherModel.coordinates!) as Data
+                    weatherTuple.cod = Int64(exactly: NSNumber(value: weatherModel.cod ?? 0))!
+                    weatherTuple.base = weatherModel.base!
+                    weatherTuple.clouds = NSKeyedArchiver.archivedData(withRootObject: weatherModel.clouds!) as Data
+                    weatherTuple.dt = Int64(exactly: NSNumber(value: weatherModel.dt ?? 0))!
+                    weatherTuple.id = Int64(exactly: NSNumber(value: weatherModel.id ?? 0))!
+                    weatherTuple.mainAttributes = NSKeyedArchiver.archivedData(withRootObject: weatherModel.mainAttributes!) as Data
+                    weatherTuple.name = weatherModel.name!
+                    weatherTuple.system = NSKeyedArchiver.archivedData(withRootObject: weatherModel.system!) as Data
+                    weatherTuple.visibility = Int64(exactly: NSNumber(value: weatherModel.visibility ?? 0))!
+                    weatherTuple.wind = NSKeyedArchiver.archivedData(withRootObject: weatherModel.wind!) as Data
+                    weatherTuple.weather = NSKeyedArchiver.archivedData(withRootObject: weatherModel.weather!) as Data
+                } else {
                     let weatherTuple = transaction.create(Into<WeatherInfo>())
                     weatherTuple.coordinates = NSKeyedArchiver.archivedData(withRootObject: weatherModel.coordinates!) as Data
                     weatherTuple.cod = Int64(exactly: NSNumber(value: weatherModel.cod ?? 0))!
@@ -96,17 +116,53 @@ class DBHandler: NSObject {
                     weatherTuple.visibility = Int64(exactly: NSNumber(value: weatherModel.visibility ?? 0))!
                     weatherTuple.wind = NSKeyedArchiver.archivedData(withRootObject: weatherModel.wind!) as Data
                     weatherTuple.weather = NSKeyedArchiver.archivedData(withRootObject: weatherModel.weather!) as Data
-
-                }, completion: { (result) -> Void in
-                    switch result {
-                    case .success: print("success!")
-                    case .failure(let error): print(error)
-                    }
-                })
-            }
+                }
+            }, completion: { (result) -> Void in
+                switch result {
+                case .success: print("success!")
+                case .failure(let error): print(error)
+                }
+            })
         }
     }
     
+    func getWeatherData(with weatherData: [WeatherInfo]?, completion: @escaping([WeatherReportModel]?, Error?) -> Void) {
+        if let weatherDataArray = weatherData, (weatherDataArray.count) > 0 {
+            var weatherReportModels = [WeatherReportModel]()
+            for weatherModel in weatherDataArray {
+                let weatherReportModel: WeatherReportModel = WeatherReportModel()
+                weatherReportModel.base = weatherModel.base
+                weatherReportModel.visibility = Int(weatherModel.visibility)
+                weatherReportModel.dt = Int(weatherModel.dt)
+                weatherReportModel.id = Int(weatherModel.id)
+                weatherReportModel.name = weatherModel.name
+                weatherReportModel.cod = Int(weatherModel.cod)
+
+                if let coordinateData = weatherModel.coordinates, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: coordinateData) as? Coord {
+                    weatherReportModel.coordinates = unarchivedData
+                }
+                if let cloudsData = weatherModel.clouds, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: cloudsData) as? Clouds {
+                    weatherReportModel.clouds = unarchivedData
+                }
+                if let mainAttributesData = weatherModel.mainAttributes, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: mainAttributesData) as? Main {
+                    weatherReportModel.mainAttributes = unarchivedData
+                }
+                if let systemData = weatherModel.system, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: systemData) as? Sys {
+                    weatherReportModel.system = unarchivedData
+                }
+                if let windData = weatherModel.wind, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: windData) as? Wind {
+                    weatherReportModel.wind = unarchivedData
+                }
+                if let weatherData = weatherModel.weather, let unarchivedData = NSKeyedUnarchiver.unarchiveObject(with: weatherData) as? [Weather] {
+                    weatherReportModel.weather = unarchivedData
+                }
+                weatherReportModels.append(weatherReportModel)
+            }
+            completion(weatherReportModels, nil)
+        }
+    }
+    
+    // Querying data from DB
     func fetchWeatherData(with completion: @escaping([WeatherReportModel]?, Error?) -> Void) {
         let weatherData = CoreStore.queryAttributes(From <WeatherInfo>(), Select ("coordinates", "weather", "base", "mainAttributes", "visibility", "wind", "clouds", "dt", "system", "id", "name", "cod"),Tweak{ (fetchRequest) -> Void in
             fetchRequest.includesPendingChanges = false

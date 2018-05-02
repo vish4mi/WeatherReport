@@ -21,9 +21,8 @@ class WeatherListViewController: UIViewController {
         super.viewDidLoad()
         // Register for DB change monitoring
         DBHandler.sharedHandler.setListMonitor(with: self)
-        
         self.view.showActivityIndicator()
-        DBHandler.sharedHandler.fetchWeatherReport { (weatherReports, error) in
+        DBHandler.sharedHandler.fetchWeatherData { (weatherReports, error) in
             guard let weatherViewModels = weatherReports else { return }
             self.weatherReportModels = weatherViewModels
             self.weatherListViewModels = [WeatherListViewModel]()
@@ -34,6 +33,7 @@ class WeatherListViewController: UIViewController {
             self.view.hideActivityIndicator()
             self.weatherListTableView.reloadData()
         }
+        DBHandler.sharedHandler.requestWeatherReport()
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,12 +86,41 @@ extension WeatherListViewController: UITableViewDelegate {
     }
 }
 
-extension WeatherListViewController: ListObserver {
-    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
-        print(monitor.objectsInAllSections())
-        
-    }
+extension WeatherListViewController: ListObjectObserver {
     
     func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
+    }
+    
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+        print(monitor.objectsInAllSections())
+        let weatherEntries = monitor.objectsInAllSections()
+        DBHandler.sharedHandler.getWeatherData(with: weatherEntries) { (weatherReports, error) in
+            guard let weatherViewModels = weatherReports else { return }
+            self.weatherReportModels = weatherViewModels
+            self.weatherListViewModels = [WeatherListViewModel]()
+            for weatherReportModel in weatherViewModels {
+                let weatherListViewModel = WeatherListViewModel(with: weatherReportModel)
+                self.weatherListViewModels?.append(weatherListViewModel)
+            }
+            self.view.hideActivityIndicator()
+            self.weatherListTableView.reloadData()
+        }
+    }
+    
+    func listMonitor(_ monitor: ListMonitor<WeatherInfo>, didUpdateObject object: WeatherInfo, atIndexPath indexPath: IndexPath) {
+        DBHandler.sharedHandler.getWeatherData(with: [object]) { (weatherReports, error) in
+            guard let weatherViewModels = weatherReports else { return }
+            for weatherReportModel in weatherViewModels {
+                let weatherListViewModel = WeatherListViewModel(with: weatherReportModel)
+                if var listViewModels = self.weatherListViewModels, indexPath.row < listViewModels.count {
+                    listViewModels[indexPath.row] = weatherListViewModel
+                }
+                
+                self.view.hideActivityIndicator()
+                self.weatherListTableView.performBatchUpdates({
+                    self.weatherListTableView.reloadRows(at: [indexPath], with: .automatic)
+                }, completion: nil)
+            }
+        }
     }
 }

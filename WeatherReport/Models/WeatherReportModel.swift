@@ -10,6 +10,10 @@ import Foundation
 import ObjectMapper
 
 class WeatherReportModel: NSObject, NSCoding, Mappable {
+    
+    override init() {
+    }
+    
     required init?(map: Map) {
     }
     
