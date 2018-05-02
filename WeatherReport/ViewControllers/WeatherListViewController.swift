@@ -19,9 +19,14 @@ class WeatherListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.showActivityIndicator()
+        DBHandler.sharedHandler.requestWeatherReport()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         // Register for DB change monitoring
         DBHandler.sharedHandler.setListMonitor(with: self)
-        self.view.showActivityIndicator()
+        // Fetch weather data
         DBHandler.sharedHandler.fetchWeatherData { (weatherReports, error) in
             guard let weatherViewModels = weatherReports else { return }
             self.weatherReportModels = weatherViewModels
@@ -33,9 +38,11 @@ class WeatherListViewController: UIViewController {
             self.view.hideActivityIndicator()
             self.weatherListTableView.reloadData()
         }
-        DBHandler.sharedHandler.requestWeatherReport()
     }
-
+    override func viewWillDisappear(_ animated: Bool) {
+        DBHandler.sharedHandler.unSetListMonitor(with: self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -122,5 +129,9 @@ extension WeatherListViewController: ListObjectObserver {
                 }, completion: nil)
             }
         }
+    }
+    
+    func listMonitor(_ monitor: ListMonitor<WeatherInfo>, didInsertObject object: WeatherInfo, toIndexPath indexPath: IndexPath) {
+        
     }
 }

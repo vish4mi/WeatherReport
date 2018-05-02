@@ -25,7 +25,9 @@ struct Constants {
     static let WEATHER_ICON_URL = "http://openweathermap.org/img/w/{WeatherIcon}.png"
     static let TEMP_GIF_URL = "http://www.animatedimages.org/data/media/148/animated-weather-image-0111.gif"
     static let WINDMILL_GIF_URL = "http://www.animatedimages.org/data/media/150/animated-windmill-image-0015.gif"
-    
+    static let SUNRISE_GIF_URL = "http://www.animatedimages.org/data/media/278/animated-sun-image-0257.gif"
+    static let SUNSET_GIF_URL = "http://www.animatedimages.org/data/media/278/animated-sun-image-0831.gif"
+
     //MARK: APIServiceMethods
     struct APIServiceMethods {
         static let weatherReportAPI = Constants.APIServiceMethods.apiURL(methodName: "/data/2.5/weather?id={CITY_ID}&units=metric&APPID=\(API_KEY)")

@@ -27,7 +27,7 @@ class WeatherListViewModel: NSObject, WeatherListViewModelProtocol {
     
     fileprivate static func getCityTemp(forWeatherModel aViewModel: WeatherReportModel?) -> String {
         if let weatherReportModel = aViewModel, let mainAttribs = weatherReportModel.mainAttributes, let temp = mainAttribs.temp {
-            return "\(temp)"
+            return "\(temp)" + " " + Constants.DEGREE_CELCIUS
         }
         return ""
     }

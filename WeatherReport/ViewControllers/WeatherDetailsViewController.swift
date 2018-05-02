@@ -51,6 +51,14 @@ class WeatherDetailsViewController: UIViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        DBHandler.sharedHandler.setListMonitor(with: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        DBHandler.sharedHandler.unSetListMonitor(with: self)
+    }
 }
 
 extension WeatherDetailsViewController: UICollectionViewDataSource {
@@ -112,12 +120,36 @@ extension WeatherDetailsViewController: UICollectionViewDelegate {
     }
 }
 
-extension WeatherDetailsViewController: ListObserver {
-    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
-        print(monitor.objectsInAllSections())
-        
-    }
+extension WeatherDetailsViewController: ListObjectObserver {
     
     func listMonitorDidRefetch(_ monitor: ListMonitor<WeatherInfo>) {
     }
+    
+    func listMonitorDidChange(_ monitor: ListMonitor<WeatherInfo>) {
+        print(monitor.objectsInAllSections())
+        let weatherEntries = monitor.objectsInAllSections()
+        DBHandler.sharedHandler.getWeatherData(with: weatherEntries) { (weatherReports, error) in
+            guard let weatherViewModels = weatherReports else { return }
+            self.weatherReportModels = weatherViewModels
+            self.view.hideActivityIndicator()
+            self.weatherDetailsCollectionView.reloadData()
+        }
+    }
+    
+    func listMonitor(_ monitor: ListMonitor<WeatherInfo>, didUpdateObject object: WeatherInfo, atIndexPath indexPath: IndexPath) {
+        DBHandler.sharedHandler.getWeatherData(with: [object]) { (weatherReports, error) in
+            guard let weatherModels = weatherReports else { return }
+            if indexPath.row < weatherModels.count {
+                self.view.hideActivityIndicator()
+                self.weatherDetailsCollectionView.performBatchUpdates({
+                    self.weatherReportModels?[indexPath.row] = weatherModels.first!
+                    self.weatherDetailsCollectionView.reloadItems(at: [indexPath])
+                })
+            }
+        }
+    }
+    
+    func listMonitor(_ monitor: ListMonitor<WeatherInfo>, didInsertObject object: WeatherInfo, toIndexPath indexPath: IndexPath) {
+        }
+        
 }

@@ -48,8 +48,8 @@ class WeatherDetailsViewModel: NSObject, WeatherDetailsViewModelProtocol {
         type = Dynamic(0)
         message = Dynamic(0)
         country = Dynamic("")
-        sunrise = Dynamic("")
-        sunset = Dynamic("")
+        sunrise = Dynamic(WeatherDetailsViewModel.getSunRiseTime(forViewModel: weatherModel))
+        sunset = Dynamic(WeatherDetailsViewModel.getSunSetTime(forViewModel: weatherModel))
         windSpeed = Dynamic("")
         windDegree = Dynamic("")
         windDescription = Dynamic("")
@@ -192,6 +192,36 @@ class WeatherDetailsViewModel: NSObject, WeatherDetailsViewModelProtocol {
             return windDescription
         }
 
+        return ""
+    }
+    
+    fileprivate static func getSunRiseTime(forViewModel weatherModel: WeatherReportModel?) -> String {
+        if let weatherReportModel = weatherModel, let system = weatherReportModel.system {
+            if let sunRiseTime = system.sunrise {
+                let aTimeInterval: TimeInterval = TimeInterval(sunRiseTime)
+                let date = Date(timeIntervalSince1970: aTimeInterval)
+                let calendar = Calendar.current
+                let hour = calendar.component(.hour, from: date)
+                let minutes = calendar.component(.minute, from: date)
+                let seconds = calendar.component(.second, from: date)
+                return "\(hour):\(minutes):\(seconds)"
+            }
+        }
+        return ""
+    }
+    
+    fileprivate static func getSunSetTime(forViewModel weatherModel: WeatherReportModel?) -> String {
+        if let weatherReportModel = weatherModel, let system = weatherReportModel.system {
+            if let sunSetTime = system.sunset {
+                let aTimeInterval: TimeInterval = TimeInterval(sunSetTime)
+                let date = Date(timeIntervalSince1970: aTimeInterval)
+                let calendar = Calendar.current
+                let hour = calendar.component(.hour, from: date)
+                let minutes = calendar.component(.minute, from: date)
+                let seconds = calendar.component(.second, from: date)
+                return "\(hour):\(minutes):\(seconds)"
+            }
+        }
         return ""
     }
 }

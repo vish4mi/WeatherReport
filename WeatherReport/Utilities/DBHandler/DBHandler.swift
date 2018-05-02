@@ -53,6 +53,23 @@ class DBHandler: NSObject {
         
     }
 
+    
+    // Un set List Monitor For Widget Entry
+    func unSetListMonitor(with controller: AnyObject) {
+        
+        //Remove Observers
+        switch controller {
+        case is WeatherListViewController:
+            let aVC: WeatherListViewController = (controller as? WeatherListViewController)!
+            self.weatherMonitor?.removeObserver(aVC)
+            
+        case is WeatherDetailsViewController:
+            let aVC: WeatherDetailsViewController = (controller as? WeatherDetailsViewController)!
+            self.weatherMonitor?.removeObserver(aVC)
+        default: break
+        }
+    }
+    
     func requestWeatherReport() {
         let dispatchGroup = DispatchGroup()
         
